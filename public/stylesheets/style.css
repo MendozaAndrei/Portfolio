@@ -1,0 +1,58 @@
+body {
+  padding: 0px 50px 50px 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #003049;
+  color: white;
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+
+#informationContainer{
+  margin-top: 270px;
+  margin-bottom: 230px;
+
+}
+
+.informationContents{
+  display: flex;
+}
+
+#intro {
+  color: white;
+  padding: 60px;
+}
+
+#intro h1{
+  font-size: 70px;
+}
+
+
+
+.about-me{
+  /* border-top: 1 solid white ; */
+  /* border-top: 4; */
+  padding-top: 10px;
+  border-top-style: solid ;
+  border-color: #EAE2B7;
+  color: white;
+}
+
+#MoreAboutMe{
+  background-color: white;
+  height: 800px;
+  border-radius: 15px;
+  padding: 50px;
+}
+
+
+.card-customize{
+  margin: 30px;
+}
+
+.list-item-customize{
+  background-color: #F5F5DC;
+}
