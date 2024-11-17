@@ -6,8 +6,20 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var auth = require ("./routes/auth")
 var app = express();
+var passport = require('passport');
+var session = require('express-session');
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+passport.use(new GoogleStrategy({
+  clientID: '393776785648-o2vb0055ana0f1ef5ukr5u0surhqa5l7.apps.googleusercontent.com', //you get this from Google, refer to your Part II
+  clientSecret: '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', //you get this from Google, refer to your Part II
+  callbackURL: 'https://portfolio.andrei.lol/auth/google/callback'},
+  function(accessToken, refreshToken, profile, cb) {
+  cb(null, profile);
+  }
+));
+
 
 
 // view engine setup
@@ -22,10 +34,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/auth', auth)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
+});
+app.use(session({secret: 'cat'}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(function(user, done) {
+  done(null, user);
 });
 
 // error handler
@@ -38,5 +56,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
 
 module.exports = app;

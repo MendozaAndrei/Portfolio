@@ -78,13 +78,10 @@
 
       <!-- START -->
       <div class="container-fluid">
-        <div class="row align-items-start">
-          
-          <div class="col">
-            <div class="card card-customize" style="background-color:  #F5F5DC;color: #003049;">
+            <div class="card card-customize shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background-color:  #2b2b2b;color: #f4ffcb;">
               <div class="card-body">
       
-                <h3 class="card-title"><%= repo.name %></h3>
+                <h3 class="card-title"><a href="<%= repo.html_url%>" style="color: inherit;"><%= repo.name %></a></h3>
                 <h5 class="card-subtitle mb-2 text-body-secondary "><%= repo.description %></h5>
                 <h4>Contributors:</h4>
                 <% if (Array.isArray(repo.contributors)) { %>
@@ -92,7 +89,7 @@
                   <div class="list-group">
                     <a href="<%= contributor.html_url %>" target="_blank" class="list-group-item list-group-item-action list-item-customize">
                       
-                      <img src="<%= contributor.avatar_url %>" style="border-radius:30px;"alt="<%= contributor.login %>'s avatar" width="50" height="50">
+                      <img src="<%= contributor.avatar_url %>" alt="<%= contributor.login %>'s avatar" width="50" height="50">
                       <%= contributor.login %> 
                       - Contributions: <%= contributor.contributions %> 
                     </a>
@@ -107,12 +104,10 @@
             </div>
     
           </div>
-          <div class="col">
-            One of three columns
-          </div>
-          
-        </div>
-      </div>
+      
+
+
+
       
 
 
@@ -120,20 +115,89 @@
       <!-- END -->
       <% }) %>
 
+  <% if (user){ %>
+
+    <div class="container-fluid comment-container">
+      <div>
+        <h3>Hello <%= user %>, thanks for visitng my website. Please leave a comment and share your thoughts!<br><br></h3>
+      </div>
+  
+      <div class="overflow-scroll">
+  
+        <!-- THis will be per user -->
+  
+        <% comments.forEach(comment => { %>
+          <div class="comment-container-user">
+            <h5><%= comment.username %></h5>
+            <h6><%= comment.comment %></h6>
+            <small><%= comment.date %></small>
+          </div>
+        <% }) %>
+  
+        
+      </div>
+  
+      <div class="user-make-comment border border-white">
+          <div class="container-fluid">
+            <input class="form-control" id="inputComments" placeholder="Type a comment!">
+          </div>
+          <div>
+            <button id="submitComment" type="submit" class="btn btn-primary mb-3">submit</button>
+          </div>
+        </form>
+      </div>
+  
+    </div>
 
 
+  <%} else { %>
+  
+    <div class="card container-fluid comment-container">
+      <div class="card-body text-center">
+        <h3 class="card-title">Wnat to leave a note or a comment? Sign in!</h3>
+        <button type="button" class="btn btn-primary btn-lg" href = "/auth/google" >Large button</button>
+      </div>
+    </div>
+  <%}%>
+
+
+
+
+
+
+  <script>
+    document.getElementById('submitComment').addEventListener('click', function(event) {
+      event.preventDefault();
+      
+      const comment = document.getElementById('inputComments').value;
+      const username = 'Andrei'; // Replace with dynamic username if available
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/submit-comment', true);
+      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          const newComment = JSON.parse(xhr.responseText);
+          addCommentToPage(newComment);
+          document.getElementById('inputComments').value = '';
+        }
+      };
+      xhr.send(JSON.stringify({ username: username, comment: comment }));
+    });
     
-
-
-
-
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-  </body>
-</html>
+    function addCommentToPage(comment) {
+      const commentContainer = document.createElement('div');
+      commentContainer.className = 'comment-container-user';
+      commentContainer.innerHTML = `
+      <h5>${comment.username}</h5>
+      <h6>${comment.comment}</h6>
+      <small>${comment.date}</small>
+      `;
+      document.querySelector('.overflow-scroll').appendChild(commentContainer);
+      }
+      </script>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      </body>
+      </html>
+      

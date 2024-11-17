@@ -1,0 +1,17 @@
+[
+  {
+    "username": "User1",
+    "comment": "This is a comment.",
+    "date": "2023-10-01"
+  },
+  {
+    "username": "User2",
+    "comment": "This is another comment.",
+    "date": "2023-10-02"
+  },
+  {
+    "username": "Andrei",
+    "comment": "Hello There",
+    "date": "2024-11-17T09:24:31.995Z"
+  }
+]
