@@ -10,15 +10,16 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var auth = require('./routes/auth');
+var commentsRouter = require('./routes/comments'); // Add comments router
 
 var app = express();
 
 // Configure session middleware
 app.use(session({
-  secret: 'your_secret_key', // Replace with a strong secret key
+  secret: process.env.SESSION_SECRET || 'your_secret_key', // Replace with a strong secret key
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Set to true if using HTTPS
+  cookie: { secure: process.env.NODE_ENV === 'production' } // Set to true if using HTTPS
 }));
 
 // Initialize Passport and restore authentication state, if any, from the session
@@ -54,5 +55,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', auth);
+app.use('/comments', commentsRouter); // Use comments router
 
 module.exports = app;
