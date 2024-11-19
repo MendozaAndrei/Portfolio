@@ -113,3 +113,18 @@ a {
   display: flex;
 }
 
+.extra-container{
+  background-color: #C7A27C;
+  padding: 20px 20px 40px 20px;
+  border-radius: 10px;
+}
+
+.github-account-container{
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+}
+.github-calendar-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
