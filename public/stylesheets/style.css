@@ -16,6 +16,9 @@ a {
   margin-bottom: 220px;
 
 }
+.imageSize{
+  max-height: 400px;
+}
 
 .informationContents{
   display: flex;
@@ -127,4 +130,33 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+
+
+@media screen and (max-width: 600px) and (max-height:1000px) {
+  body{
+    padding: 0px; 
+    padding-bottom: 40px;
+  }
+  .nav-image{
+    width: auto;
+    height: auto;
+  }
+
+  .imageSize{
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+  }
+
+  .repo-containers{
+    width: 100%;
+  }
+
+  
+  #intro h1{
+    font-size: 450%;
+  }
+
 }
